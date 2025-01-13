@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RGB Text Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #comments {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comment {
+            margin: 10px 0;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>RGB Comments</h1>
+    <div class="input-container">
+        <input type="text" id="commentInput" placeholder="Type your comment here...">
+        <button onclick="addComment()">Add Comment</button>
+    </div>
+    <div id="comments"></div>
+
+    <script>
+        function addComment() {
+            const input = document.getElementById('commentInput');
+            const commentsDiv = document.getElementById('comments');
+            
+            if (input.value.trim() !== '') {
+                const comment = document.createElement('div');
+                comment.className = 'comment';
+                comment.innerText = input.value;
+                
+                let hue = 0;
+                
+                function updateColor() {
+                    hue = (hue + 1) % 360;
+                    comment.style.color = `hsl(${hue}, 100%, 50%)`;
+                    requestAnimationFrame(updateColor);
+                }
+                
+                updateColor();
+                commentsDiv.appendChild(comment);
+                input.value = '';
+            }
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('commentInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addComment();
+            }
+        });
+    </script>
+</body>
+</html>
